@@ -6,50 +6,63 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0d0f12">
-<title>Z-Parkour 3D - HunterCraft Lighting, TWZ2 Zombies & TaCZ</title>
+<title>Z-Parkour 3D</title>
 <style>
-:root{--bg:#0d0f12;--fg:#f2f2f2;--ac:#c0392b;--panel:#151312f4;--slot:#221c19;--slot-b:#4a3b32;color-scheme:dark}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
-canvas{display:block}
-#hud{position:fixed;left:12px;top:calc(10px + env(safe-area-inset-top,0px));font-weight:700;font-size:13px;text-shadow:0 2px 4px #000;pointer-events:none;z-index:10;max-width:58vw}
+:root{--bg:#0d0f12;--fg:#f2f2f2;--ac:#c0392b;--panel:#141211f5;--slot:#221c19;--slot-b:#4a3b32;color-scheme:dark}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+canvas{display:block;touch-action:none}
+button{font:700 13px system-ui;padding:11px 18px;border:2px solid var(--ac);background:#161010dd;color:var(--fg);border-radius:10px;cursor:pointer;touch-action:manipulation;pointer-events:auto}
+button:active{transform:scale(.95)}
+
+/* HUD durante o jogo */
+#hud{position:fixed;left:12px;top:calc(10px + env(safe-area-inset-top,0px));font-weight:700;font-size:13px;text-shadow:0 2px 4px #000;pointer-events:none;z-index:10;max-width:58vw;display:none}
 .bar{width:172px;height:10px;background:#000a;margin-bottom:5px;border-radius:4px;overflow:hidden;border:1px solid #fff3}.bar i{display:block;height:100%;border-radius:3px;transition:width .1s}
 #zoneBadge{display:inline-block;background:#0009;border:1px solid #c0392b99;padding:3px 9px;border-radius:5px;font-size:11px;color:#ffb09e;margin-bottom:5px}
 #quickSlots{display:flex;gap:5px;margin-top:6px;pointer-events:auto}
-.qSlot{width:42px;height:42px;background:#1a1513d9;border:1.5px solid #6a5244;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;box-shadow:0 2px 6px #000a}
+.qSlot{width:42px;height:42px;background:#1a1513d9;border:1.5px solid #6a5244;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;box-shadow:0 2px 6px #000a;touch-action:manipulation}
 .qSlot:active{transform:scale(.94)}
-.qSlot img{width:28px;height:28px;object-fit:contain}
-.qSlot span{position:absolute;right:3px;bottom:1px;font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
-.qSlot small{position:absolute;left:3px;top:1px;font-size:9px;color:#ffd27d}
+.qSlot img{width:28px;height:28px;object-fit:contain;pointer-events:none}
+.qSlot span{position:absolute;right:3px;bottom:1px;font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;pointer-events:none}
+.qSlot small{position:absolute;left:3px;top:1px;font-size:9px;color:#ffd27d;pointer-events:none}
 
-#x{position:fixed;left:50%;top:50%;width:10px;height:10px;margin:-5px;border:1.5px solid #fffd;border-radius:50%;pointer-events:none;z-index:5;box-shadow:0 0 4px #000}
+/* Botão de Configurações no canto superior direito (sempre acessível) */
+#cfgBtn{position:fixed;right:14px;top:calc(12px + env(safe-area-inset-top,0px));width:48px;height:48px;min-width:0;padding:0;border-radius:50%;font-size:22px;display:flex;align-items:center;justify-content:center;background:#181212e6;border:2px solid #e44332;box-shadow:0 4px 14px #000b;z-index:120}
+
+/* Painel de Configurações (Gráficos, Sensibilidade, Horário) */
+#cfgPanel{position:fixed;inset:0;display:none;background:#0b0a0aeb;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;z-index:130;overflow-y:auto}
+.cfgBox{background:#181413;border:2px solid #5c3b32;border-radius:14px;padding:16px;max-width:440px;width:100%;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px #000c}
+.cfgBox h2{margin:0;color:#ff6b57;font-size:20px;text-align:center;letter-spacing:1.5px}
+.cfgRow{display:flex;flex-direction:column;gap:6px;background:#211b19;padding:10px 12px;border-radius:9px;border:1px solid #ffffff14}
+.cfgRow label{font-size:12px;font-weight:700;color:#ffd2b8;display:flex;justify-content:space-between}
+.cfgRow input[type=range]{width:100%;accent-color:#e44332;height:24px;cursor:pointer}
+.cfgGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cfgGrid button,#tod button{min-width:0;padding:9px 10px;font-size:12px}
+#tod{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+
+/* Tela de Início limpa */
+#menu{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at center,#0005 0%,#090606cc 100%);text-align:center;padding:20px;z-index:100}
+#menu h1{font-size:48px;margin:0;color:#e44332;letter-spacing:5px;text-shadow:0 0 24px #c0392b,0 4px 0 #3a0808;animation:fk 4s infinite}
+@keyframes fk{0%,92%,100%{opacity:1}94%{opacity:.55}96%{opacity:.92}98%{opacity:.45}}
+#best{margin:0;font-size:13px;font-weight:700;color:#ffd27d;letter-spacing:1px;text-shadow:0 2px 4px #000}
+.menuBtns{display:flex;flex-direction:column;gap:10px;width:230px;margin-top:6px}
+.menuBtns button{width:100%;padding:14px 20px;font-size:15px;letter-spacing:1.5px;background:linear-gradient(#6e1e17ee,#2a0b08ee);box-shadow:0 4px 18px #c0392b66}
+
+#x{position:fixed;left:50%;top:50%;width:10px;height:10px;margin:-5px;border:1.5px solid #fffd;border-radius:50%;pointer-events:none;z-index:5;box-shadow:0 0 4px #000;display:none}
 #fl{position:fixed;inset:0;background:#f003;opacity:0;pointer-events:none;z-index:20}
-#menu{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(#000c,#1c0808eb);text-align:center;padding:16px;z-index:100;overflow-y:auto}
-#menu h1{font-size:40px;margin:0;color:#e44332;letter-spacing:4px;text-shadow:0 0 18px #c0392b,0 4px 0 #400;animation:fk 4s infinite}
-#sub{letter-spacing:3.5px;font-size:11px;opacity:.9;margin-top:-5px}
-@keyframes fk{0%,92%,100%{opacity:1}94%{opacity:.5}96%{opacity:.9}98%{opacity:.4}}
-#menu button{background:linear-gradient(#5e1b15cc,#240a08cc);box-shadow:0 0 12px #c0392b55}
-#menu button:active{transform:scale(.97)}
-#menu p{margin:0;opacity:.88;max-width:490px;font-size:13px;line-height:1.4}
-button{font:700 13px system-ui;padding:10px 18px;border:2px solid var(--ac);background:#000a;color:var(--fg);border-radius:9px;min-width:190px;cursor:pointer}
 
-/* Botões touch */
-.t{position:fixed;display:none;width:64px;height:64px;min-width:0;padding:0;border-radius:50%;font-size:25px;line-height:1;right:14px;z-index:15;align-items:center;justify-content:center;background:#000b;box-shadow:0 0 12px #000a}
-@media(pointer:coarse){.t{display:flex}}
+/* Botões touch durante o jogo */
+.t{position:fixed;display:none;width:64px;height:64px;min-width:0;padding:0;border-radius:50%;font-size:25px;line-height:1;right:14px;z-index:15;align-items:center;justify-content:center;background:#000c;box-shadow:0 0 12px #000a;touch-action:manipulation}
 #bf{bottom:calc(94px + env(safe-area-inset-bottom,0px));font-size:28px;border-color:#ff4d3a}
 #bj{bottom:calc(170px + env(safe-area-inset-bottom,0px))}
 #bd{bottom:calc(246px + env(safe-area-inset-bottom,0px));width:52px;height:52px;font-size:21px}
 #bw{bottom:calc(308px + env(safe-area-inset-bottom,0px));width:52px;height:52px;font-size:20px}
 #bs{bottom:calc(370px + env(safe-area-inset-bottom,0px));width:52px;height:52px;font-size:20px}
-.t2{position:fixed;top:calc(168px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;font-size:19px;line-height:1;min-width:0;padding:0;display:none;z-index:15;align-items:center;justify-content:center;background:#000b}
-@media(pointer:coarse){.t2{display:flex}}
-.t:active,.t2:active{transform:scale(.92);background:#c0392b66}
-
-#tod,#stg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-#tod button,#stg button{min-width:0;padding:8px 11px;font-size:12px}
+.t2{position:fixed;top:calc(168px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;font-size:19px;line-height:1;min-width:0;padding:0;display:none;z-index:15;align-items:center;justify-content:center;background:#000c;touch-action:manipulation}
+.t:active,.t2:active{transform:scale(.9);background:#c0392b88}
 
 /* Inventário estilo TWZ2 / Last Day on Earth */
 #invPanel{position:fixed;inset:0;display:none;background:var(--panel);flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;overflow:auto;padding:18px 14px 28px;z-index:90}
-.invHeader{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;max-width:860px;width:100%;border-bottom:1px solid #ffffff1c;padding-bottom:8px}
+.invHeader{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;max-width:860px;width:100%;border-bottom:1px solid #ffffff1c;padding-bottom:8px;padding-right:54px;box-sizing:border-box}
 .invHeader h2{margin:0;color:#ff6b57;font-size:22px;letter-spacing:1px}
 .invStats{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;font-weight:700}
 .statPill{background:#0009;border:1px solid #ffffff24;padding:4px 9px;border-radius:6px}
@@ -67,9 +80,9 @@ button{font:700 13px system-ui;padding:10px 18px;border:2px solid var(--ac);back
 .invSlot img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 2px 3px #000)}
 .invSlot .name{font-weight:700;line-height:1.15;font-size:11px}
 .invSlot .qty{font-size:10px;opacity:.92;color:#ddd}
-.invSlot .actBtn{margin-top:2px;padding:4px 8px;font-size:10px;min-width:0;width:90%;border-radius:6px;border-width:1.5px}
+.invSlot .actBtn{margin-top:2px;padding:5px 8px;font-size:10px;min-width:0;width:90%;border-radius:6px;border-width:1.5px}
 .badgeTop{position:absolute;top:4px;left:5px;font-size:9px;font-weight:800;padding:1px 5px;border-radius:4px;background:#0009}
-#invClose{min-width:150px;margin-top:6px}
+#invClose{min-width:160px;margin-top:6px}
 #msg{position:fixed;top:22%;width:100%;text-align:center;font:700 19px system-ui;text-shadow:0 2px 6px #000;pointer-events:none;opacity:0;z-index:50;transition:opacity .2s}
 
 /* Luneta de Sniper / DMR */
@@ -84,6 +97,51 @@ button{font:700 13px system-ui;padding:10px 18px;border:2px solid var(--ac);back
 </style>
 </head>
 <body>
+<!-- Botão de Configurações no canto superior direito -->
+<button id="cfgBtn" title="Configurações">⚙️</button>
+
+<!-- Painel de Configurações -->
+<div id="cfgPanel">
+  <div class="cfgBox">
+    <h2>⚙️ CONFIGURAÇÕES</h2>
+    <div class="cfgRow">
+      <label><span>🎯 Sensibilidade de Giro</span><span id="sensVal">1.0x</span></label>
+      <input type="range" id="sensRange" min="0.2" max="2.5" step="0.1" value="1.0">
+    </div>
+    <div class="cfgRow">
+      <label><span>☀️ Horário do Dia</span></label>
+      <div id="tod">
+        <button data-h="8">☀ MANHÃ</button>
+        <button data-h="16">🌇 TARDE</button>
+        <button data-h="22">🌙 NOITE</button>
+      </div>
+    </div>
+    <div class="cfgRow">
+      <label><span>🖥️ Gráficos & Desempenho</span></label>
+      <div class="cfgGrid">
+        <button id="rtxBtn" style="border-color:#ffb703">✨ RTX: LIGADO</button>
+        <button id="pot">⚙ BATATA: OFF</button>
+        <button id="sr"></button>
+        <button id="sf"></button>
+        <button id="sp"></button>
+        <button id="sd"></button>
+      </div>
+    </div>
+    <button id="fs" style="width:100%">⛶ TELA CHEIA</button>
+    <button id="cfgClose" style="width:100%;background:#5e1b15">CONCLUÍDO</button>
+  </div>
+</div>
+
+<!-- Tela de Início Limpa -->
+<div id="menu">
+  <h1>Z-PARKOUR</h1>
+  <p id="best"></p>
+  <div class="menuBtns">
+    <button id="cont">CONTINUAR</button>
+    <button id="new">▶ NOVO JOGO</button>
+  </div>
+</div>
+
 <div id="hud">
   <div id="zoneBadge">🏙️ CENTRO DENSO (BECOS & TELHADOS)</div>
   <div class="bar"><i id="hp" style="background:#e33"></i></div>
@@ -163,38 +221,27 @@ button{font:700 13px system-ui;padding:10px 18px;border:2px solid var(--ac);back
 <button class="t2" id="br" style="left:218px" title="Recarregar">🔃</button>
 <button class="t2" id="bi" style="left:270px" title="Inventário">🎒</button>
 
-<div id="menu">
-  <h1>Z-PARKOUR</h1>
-  <div id="sub">HUNTERCRAFT LIGHTING · TWZ2 ZOMBIES & TACZ</div>
-  <p id="best"></p>
-  <p>Zumbis estilizados estilo The Walking Zombie 2, ruas com calçadas e faixas, iluminação volumétrica e reflexos RTX estilo HunterCraft, prédios 3D e 40 armas TaCZ.</p>
-  <div id="tod">
-    <button data-h="8">☀ MANHÃ</button>
-    <button data-h="16">🌇 TARDE</button>
-    <button data-h="22">🌙 NOITE</button>
-  </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-    <button id="rtxBtn" style="min-width:0;font-size:12px;border-color:#ffb703">✨ RTX / HUNTERCRAFT: LIGADO</button>
-    <button id="pot" style="min-width:0;font-size:12px">⚙ MODO BATATA: DESLIGADO</button>
-    <button id="fs" style="min-width:0;font-size:12px">⛶ TELA CHEIA</button>
-  </div>
-  <div id="stg">
-    <button id="sr"></button>
-    <button id="sf"></button>
-    <button id="sp"></button>
-    <button id="sd"></button>
-  </div>
-  <button id="cont">CONTINUAR</button>
-  <button id="new">▶ NOVO JOGO</button>
-  <p style="font-size:11px;opacity:.75">WASD mover · Espaço pular (2x Pulo Duplo / Parede) · Shift correr · E dash · C deslizar · Q ou Scroll trocar arma · Botão Direito mirar/luneta · R recarregar · I inventário · B craft</p>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const T=THREE,$=id=>document.getElementById(id),R=Math.random,SK='zp3d_v9_hc_twz2',MAP=360;
+const T=THREE,$=id=>document.getElementById(id),R=Math.random,SK='zp3d_v10_ui_fix',MAP=360;
 const memStore={};
 function readStore(k){try{return localStorage.getItem(k)}catch(e){return memStore[k]||null}}
 function writeStore(k,v){try{localStorage.setItem(k,v)}catch(e){memStore[k]=String(v)}}
+
+// Helper universal para toque/clique rápido sem bloqueio
+function onTap(el,fn){
+  if(!el)return;
+  let last=0;
+  const run=e=>{
+    if(e){e.stopPropagation()}
+    const now=performance.now();
+    if(now-last<140)return;
+    last=now;
+    fn(e);
+  };
+  el.addEventListener('pointerdown',run);
+  el.addEventListener('click',run);
+}
 
 // ============== RARIDADES ==============
 const RARITY={
@@ -224,29 +271,21 @@ const tG=tex(256,256,(x,w,h)=>{
   spk(x,w,h,3200,['#22201c','#524f47','#2f2d28','#181612','#635e54']);
 },130,130);
 
-// Textura melhorada de rua com meio-fio, calçada, bueiros, rachaduras e brilho de poça
 const tR=tex(512,128,(x,w,h)=>{
-  // Calçadas laterais
   x.fillStyle='#6c6962';x.fillRect(0,0,w,16);x.fillRect(0,h-16,w,16);
-  // Meio-fio
   x.fillStyle='#8c887e';x.fillRect(0,14,w,4);x.fillRect(0,h-18,w,4);
   x.fillStyle='#2a2926';x.fillRect(0,18,w,2);x.fillRect(0,h-20,w,2);
-  // Asfalto escuro
   x.fillStyle='#1f2126';x.fillRect(0,20,w,h-40);
   spk(x,w,h,4200,['#121317','#353840','#282a30','#18191d']);
-  // Poças reflexivas sutis
   x.fillStyle='rgba(70,95,120,0.22)';
   x.beginPath();x.ellipse(140,48,38,10,0.1,0,Math.PI*2);x.fill();
   x.beginPath();x.ellipse(390,82,45,11,-0.08,0,Math.PI*2);x.fill();
-  // Rachaduras
   x.strokeStyle='#111215';x.lineWidth=1.5;
   x.beginPath();x.moveTo(60,30);x.lineTo(85,48);x.lineTo(75,65);x.stroke();
   x.beginPath();x.moveTo(290,95);x.lineTo(315,78);x.lineTo(340,86);x.stroke();
-  // Faixas laterais brancas e linha central amarela dupla tracejada
   x.fillStyle='#b8bcc2';x.fillRect(0,23,w,2);x.fillRect(0,h-25,w,2);
   x.fillStyle='#d8ae28';
   for(let i=0;i<8;i++){x.fillRect(i*64+10,61,34,2.5);x.fillRect(i*64+10,65,34,2.5)}
-  // Tampas de bueiro
   x.fillStyle='#34383e';x.beginPath();x.arc(220,42,7,0,Math.PI*2);x.fill();
   x.strokeStyle='#191b1f';x.lineWidth=1.5;x.stroke();
 },52,1);
@@ -295,48 +334,4 @@ const tBs=[
   mkB('#6b3b2e','#12161c',1),
   mkB('#68655e','#1a2028',0),
   mkB('#3d4854','#1d2c38',2),
-  mkB('#756a58','#1a1812',2),
-  mkB('#4e3f32','#14120e',1)
-];
-
-// Texturas estilo The Walking Zombie 2 (low-poly pintado com sombras e sangue)
-const tZBody=tex(128,128,(x,w,h)=>{
-  const g=x.createLinearGradient(0,0,0,h);
-  g.addColorStop(0,'#7b9c65');g.addColorStop(.55,'#577844');g.addColorStop(1,'#38522b');
-  x.fillStyle=g;x.fillRect(0,0,w,h);
-  // Veias e manchas estilizadas TWZ2
-  x.strokeStyle='#2c4221';x.lineWidth=2;
-  for(let i=0;i<14;i++){x.beginPath();x.moveTo(R()*w,R()*h);x.lineTo(R()*w,R()*h);x.stroke()}
-  x.fillStyle='rgba(125,18,18,0.45)';
-  for(let i=0;i<8;i++){x.beginPath();x.arc(R()*w,R()*h,4+R()*8,0,Math.PI*2);x.fill()}
-  spk(x,w,h,550,['#2a4220','#8fb078','#5e1010']);
-},1,1);
-
-const tZCloth=tex(128,128,(x,w,h)=>{
-  x.fillStyle='#ffffff';x.fillRect(0,0,w,h);
-  // Sombreamento angular e rasgos estilo TWZ2
-  x.fillStyle='rgba(0,0,0,0.18)';
-  x.fillRect(0,h*.65,w,h*.35);
-  x.fillStyle='rgba(110,14,14,0.42)';
-  x.beginPath();x.arc(w*.35,h*.42,16,0,Math.PI*2);x.fill();
-  x.beginPath();x.arc(w*.7,h*.6,11,0,Math.PI*2);x.fill();
-  spk(x,w,h,650,['#00000030','#6e111177']);
-},1,1);
-
-const tF=tex(128,64,(x,w,h)=>{
-  // Rosto estilizado TWZ2 com arcada supraciliar marcada, olhos brilhantes e mandíbula
-  x.fillStyle='#6b8c56';x.fillRect(0,0,w,h);
-  const cx=w/2;
-  // Sombra sob a testa
-  x.fillStyle='#354a28';x.fillRect(cx-24,14,48,7);
-  // Cavidades oculares escuras
-  x.fillStyle='#1d1212';
-  x.fillRect(cx-19,19,14,10);x.fillRect(cx+5,19,14,10);
-  // Íris amarela brilhante TWZ2
-  x.fillStyle='#ffe14d';
-  x.fillRect(cx-15,21,7,6);x.fillRect(cx+8,21,7,6);
-  // Nariz triangular sombreado
-  x.fillStyle='#3e5430';
-  x.beginPath();x.moveTo(cx,28);x.lineTo(cx-5,37);x.lineTo(cx+5,37);x.closePath();x.fill();
-  // Boca aberta com sangue e dentes irregulares
-  x.fillStyle='#240606';x.fillRect(cx-15,
+  
