@@ -228,19 +228,13 @@ const memStore={};
 function readStore(k){try{return localStorage.getItem(k)}catch(e){return memStore[k]||null}}
 function writeStore(k,v){try{localStorage.setItem(k,v)}catch(e){memStore[k]=String(v)}}
 
-// Helper universal para toque/clique rápido sem bloqueio
 function onTap(el,fn){
   if(!el)return;
-  let last=0;
-  const run=e=>{
-    if(e){e.stopPropagation()}
-    const now=performance.now();
-    if(now-last<140)return;
-    last=now;
+  el.addEventListener('click',e=>{
+    e.preventDefault();
+    e.stopPropagation();
     fn(e);
-  };
-  el.addEventListener('pointerdown',run);
-  el.addEventListener('click',run);
+  });
 }
 
 // ============== RARIDADES ==============
@@ -1259,11 +1253,18 @@ cv.addEventListener('touchmove',e=>{
 const te=e=>{for(const t of e.changedTouches)for(const s of['l','r'])if(st[s]&&st[s].id==t.identifier)st[s]=null};
 cv.addEventListener('touchend',te);cv.addEventListener('touchcancel',te);
 
-// Controles em tela (funcionamento garantido com pointerdown/click)
-$('bf').addEventListener('pointerdown',e=>{e.stopPropagation();if(!menuOn&&!invOn&&!crOn&&!cfgOn)fire=1});
-$('bf').addEventListener('pointerup',()=>fire=0);
-$('bf').addEventListener('pointerleave',()=>fire=0);
-$('bf').addEventListener('pointercancel',()=>fire=0);
+// Controles em tela
+$('bf').addEventListener('touchstart',e=>{
+  e.stopPropagation();
+  if(!menuOn&&!invOn&&!crOn&&!cfgOn)fire=1;
+},{passive:true});
+$('bf').addEventListener('touchend',()=>{fire=0},{passive:true});
+$('bf').addEventListener('touchcancel',()=>{fire=0},{passive:true});
+$('bf').addEventListener('mousedown',e=>{
+  e.stopPropagation();
+  if(!menuOn&&!invOn&&!crOn&&!cfgOn)fire=1;
+});
+$('bf').addEventListener('mouseup',()=>{fire=0});
 onTap($('bj'),jump);
 onTap($('bd'),dash);
 onTap($('bw'),()=>sw(1));
@@ -1787,7 +1788,18 @@ function frame(t){
   requestAnimationFrame(frame);
 }
 
-function fs(){try{const e=document.documentElement;(e.requestFullscreen||e.webkitRequestFullscreen||function(){}).call(e);const o=window.screen&&screen.orientation;if(o&&o.lock)o.lock('landscape').catch(function(){})}catch(x){}}
+function fs(){
+  try{
+    const e=document.documentElement;
+    const req=e.requestFullscreen||e.webkitRequestFullscreen;
+    if(req&&!document.fullscreenElement){
+      const p=req.call(e);
+      if(p&&p.catch)p.catch(()=>{});
+    }
+    const o=window.screen&&screen.orientation;
+    if(o&&o.lock)o.lock('landscape').catch(()=>{});
+  }catch(x){}
+}
 function start(s){
   if(matchMedia('(pointer:coarse)').matches)fs();
   if(s&&s.hr!=null)hr=s.hr;audio();if(AC&&AC.state=='suspended')AC.resume();
