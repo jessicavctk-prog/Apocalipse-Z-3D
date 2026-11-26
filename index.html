@@ -13,8 +13,6 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:
 canvas{display:block;touch-action:none}
 button{font:700 13px system-ui;padding:11px 18px;border:2px solid var(--ac);background:#161010dd;color:var(--fg);border-radius:10px;cursor:pointer;touch-action:manipulation;pointer-events:auto}
 button:active{transform:scale(.95)}
-
-/* HUD durante o jogo */
 #hud{position:fixed;left:12px;top:calc(10px + env(safe-area-inset-top,0px));font-weight:700;font-size:13px;text-shadow:0 2px 4px #000;pointer-events:none;z-index:10;max-width:58vw;display:none}
 .bar{width:172px;height:10px;background:#000a;margin-bottom:5px;border-radius:4px;overflow:hidden;border:1px solid #fff3}.bar i{display:block;height:100%;border-radius:3px;transition:width .1s}
 #zoneBadge{display:inline-block;background:#0009;border:1px solid #c0392b99;padding:3px 9px;border-radius:5px;font-size:11px;color:#ffb09e;margin-bottom:5px}
@@ -24,11 +22,7 @@ button:active{transform:scale(.95)}
 .qSlot img{width:28px;height:28px;object-fit:contain;pointer-events:none}
 .qSlot span{position:absolute;right:3px;bottom:1px;font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;pointer-events:none}
 .qSlot small{position:absolute;left:3px;top:1px;font-size:9px;color:#ffd27d;pointer-events:none}
-
-/* Botão de Configurações no canto superior direito (sempre acessível) */
 #cfgBtn{position:fixed;right:14px;top:calc(12px + env(safe-area-inset-top,0px));width:48px;height:48px;min-width:0;padding:0;border-radius:50%;font-size:22px;display:flex;align-items:center;justify-content:center;background:#181212e6;border:2px solid #e44332;box-shadow:0 4px 14px #000b;z-index:120}
-
-/* Painel de Configurações (Gráficos, Sensibilidade, Horário) */
 #cfgPanel{position:fixed;inset:0;display:none;background:#0b0a0aeb;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;z-index:130;overflow-y:auto}
 .cfgBox{background:#181413;border:2px solid #5c3b32;border-radius:14px;padding:16px;max-width:440px;width:100%;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px #000c}
 .cfgBox h2{margin:0;color:#ff6b57;font-size:20px;text-align:center;letter-spacing:1.5px}
@@ -38,19 +32,14 @@ button:active{transform:scale(.95)}
 .cfgGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .cfgGrid button,#tod button{min-width:0;padding:9px 10px;font-size:12px}
 #tod{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-
-/* Tela de Início limpa */
 #menu{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at center,#0005 0%,#090606cc 100%);text-align:center;padding:20px;z-index:100}
 #menu h1{font-size:48px;margin:0;color:#e44332;letter-spacing:5px;text-shadow:0 0 24px #c0392b,0 4px 0 #3a0808;animation:fk 4s infinite}
 @keyframes fk{0%,92%,100%{opacity:1}94%{opacity:.55}96%{opacity:.92}98%{opacity:.45}}
 #best{margin:0;font-size:13px;font-weight:700;color:#ffd27d;letter-spacing:1px;text-shadow:0 2px 4px #000}
 .menuBtns{display:flex;flex-direction:column;gap:10px;width:230px;margin-top:6px}
 .menuBtns button{width:100%;padding:14px 20px;font-size:15px;letter-spacing:1.5px;background:linear-gradient(#6e1e17ee,#2a0b08ee);box-shadow:0 4px 18px #c0392b66}
-
 #x{position:fixed;left:50%;top:50%;width:10px;height:10px;margin:-5px;border:1.5px solid #fffd;border-radius:50%;pointer-events:none;z-index:5;box-shadow:0 0 4px #000;display:none}
 #fl{position:fixed;inset:0;background:#f003;opacity:0;pointer-events:none;z-index:20}
-
-/* Botões touch durante o jogo */
 .t{position:fixed;display:none;width:64px;height:64px;min-width:0;padding:0;border-radius:50%;font-size:25px;line-height:1;right:14px;z-index:15;align-items:center;justify-content:center;background:#000c;box-shadow:0 0 12px #000a;touch-action:manipulation}
 #bf{bottom:calc(94px + env(safe-area-inset-bottom,0px));font-size:28px;border-color:#ff4d3a}
 #bj{bottom:calc(170px + env(safe-area-inset-bottom,0px))}
@@ -59,8 +48,6 @@ button:active{transform:scale(.95)}
 #bs{bottom:calc(370px + env(safe-area-inset-bottom,0px));width:52px;height:52px;font-size:20px}
 .t2{position:fixed;top:calc(168px + env(safe-area-inset-top,0px));width:46px;height:46px;border-radius:50%;font-size:19px;line-height:1;min-width:0;padding:0;display:none;z-index:15;align-items:center;justify-content:center;background:#000c;touch-action:manipulation}
 .t:active,.t2:active{transform:scale(.9);background:#c0392b88}
-
-/* Inventário estilo TWZ2 / Last Day on Earth */
 #invPanel{position:fixed;inset:0;display:none;background:var(--panel);flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;overflow:auto;padding:18px 14px 28px;z-index:90}
 .invHeader{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;max-width:860px;width:100%;border-bottom:1px solid #ffffff1c;padding-bottom:8px;padding-right:54px;box-sizing:border-box}
 .invHeader h2{margin:0;color:#ff6b57;font-size:22px;letter-spacing:1px}
@@ -84,8 +71,6 @@ button:active{transform:scale(.95)}
 .badgeTop{position:absolute;top:4px;left:5px;font-size:9px;font-weight:800;padding:1px 5px;border-radius:4px;background:#0009}
 #invClose{min-width:160px;margin-top:6px}
 #msg{position:fixed;top:22%;width:100%;text-align:center;font:700 19px system-ui;text-shadow:0 2px 6px #000;pointer-events:none;opacity:0;z-index:50;transition:opacity .2s}
-
-/* Luneta de Sniper / DMR */
 #sc{position:fixed;inset:0;display:none;pointer-events:none;z-index:4;background:radial-gradient(circle at center,transparent 27%,rgba(0,0,0,.72) 27.6%,rgba(0,0,0,.97) 36%,#000 100%)}
 #scRing{position:fixed;left:50%;top:50%;width:min(56vh,56vw);height:min(56vh,56vw);transform:translate(-50%,-50%);border-radius:50%;border:2.5px solid rgba(255,255,255,.35);box-shadow:0 0 0 9999px rgba(0,0,0,.65),inset 0 0 28px rgba(0,0,0,.85)}
 #scH{position:fixed;left:50%;top:50%;width:min(56vh,56vw);height:1.5px;background:rgba(255,60,60,.75);transform:translate(-50%,-50%)}
@@ -97,241 +82,33 @@ button:active{transform:scale(.95)}
 </style>
 </head>
 <body>
-<!-- Botão de Configurações no canto superior direito -->
 <button id="cfgBtn" title="Configurações">⚙️</button>
-
-<!-- Painel de Configurações -->
-<div id="cfgPanel">
-  <div class="cfgBox">
-    <h2>⚙️ CONFIGURAÇÕES</h2>
-    <div class="cfgRow">
-      <label><span>🎯 Sensibilidade de Giro</span><span id="sensVal">1.0x</span></label>
-      <input type="range" id="sensRange" min="0.2" max="2.5" step="0.1" value="1.0">
-    </div>
-    <div class="cfgRow">
-      <label><span>☀️ Horário do Dia</span></label>
-      <div id="tod">
-        <button data-h="8">☀ MANHÃ</button>
-        <button data-h="16">🌇 TARDE</button>
-        <button data-h="22">🌙 NOITE</button>
-      </div>
-    </div>
-    <div class="cfgRow">
-      <label><span>🖥️ Gráficos & Desempenho</span></label>
-      <div class="cfgGrid">
-        <button id="rtxBtn" style="border-color:#ffb703">✨ RTX: LIGADO</button>
-        <button id="pot">⚙ BATATA: OFF</button>
-        <button id="sr"></button>
-        <button id="sf"></button>
-        <button id="sp"></button>
-        <button id="sd"></button>
-      </div>
-    </div>
-    <button id="fs" style="width:100%">⛶ TELA CHEIA</button>
-    <button id="cfgClose" style="width:100%;background:#5e1b15">CONCLUÍDO</button>
-  </div>
-</div>
-
-<!-- Tela de Início Limpa -->
-<div id="menu">
-  <h1>Z-PARKOUR</h1>
-  <p id="best"></p>
-  <div class="menuBtns">
-    <button id="cont">CONTINUAR</button>
-    <button id="new">▶ NOVO JOGO</button>
-  </div>
-</div>
-
-<div id="hud">
-  <div id="zoneBadge">🏙️ CENTRO DENSO (BECOS & TELHADOS)</div>
-  <div class="bar"><i id="hp" style="background:#e33"></i></div>
-  <div class="bar"><i id="fd" style="background:#e90"></i></div>
-  <div class="bar"><i id="wt" style="background:#39e"></i></div>
-  <div class="bar" style="height:6px"><i id="stBar" style="background:#4e8;width:100%"></i></div>
-  <div id="inf"></div>
-  <div id="inv" style="font-size:11px;margin-top:2px;opacity:.92"></div>
-  <div id="quickSlots">
-    <div class="qSlot" id="qFood" title="Usar Comida"><small>1</small><span id="qFoodQty">0</span></div>
-    <div class="qSlot" id="qWater" title="Usar Água"><small>2</small><span id="qWaterQty">0</span></div>
-    <div class="qSlot" id="qGrenade" title="Granada [G]"><small>G</small><span id="qGrQty">0</span></div>
-    <div class="qSlot" id="qBomb" title="Bomba [H]"><small>H</small><span id="qBbQty">0</span></div>
-  </div>
-</div>
-<div id="x"></div>
-<div id="msg"></div>
-
-<div id="sc">
-  <div id="scRing"></div>
-  <div id="scH"></div>
-  <div id="scV"></div>
-  <div id="scCenterDot"></div>
-  <div class="mil-h" style="left:calc(50% - 90px)"></div>
-  <div class="mil-h" style="left:calc(50% - 60px)"></div>
-  <div class="mil-h" style="left:calc(50% - 30px)"></div>
-  <div class="mil-h" style="left:calc(50% + 30px)"></div>
-  <div class="mil-h" style="left:calc(50% + 60px)"></div>
-  <div class="mil-h" style="left:calc(50% + 90px)"></div>
-  <div class="mil-v" style="top:calc(50% - 90px)"></div>
-  <div class="mil-v" style="top:calc(50% - 60px)"></div>
-  <div class="mil-v" style="top:calc(50% - 30px)"></div>
-  <div class="mil-v" style="top:calc(50% + 30px)"></div>
-  <div class="mil-v" style="top:calc(50% + 60px)"></div>
-  <div class="mil-v" style="top:calc(50% + 90px)"></div>
-  <div id="scInfo">LUNETA ÓPTICA · ZOOM ATIVO</div>
-</div>
-
+<div id="cfgPanel"><div class="cfgBox"><h2>⚙️ CONFIGURAÇÕES</h2><div class="cfgRow"><label><span>🎯 Sensibilidade de Giro</span><span id="sensVal">1.0x</span></label><input type="range" id="sensRange" min="0.2" max="2.5" step="0.1" value="1.0"></div><div class="cfgRow"><label><span>☀️ Horário do Dia</span></label><div id="tod"><button data-h="8">☀ MANHÃ</button><button data-h="16">🌇 TARDE</button><button data-h="22">🌙 NOITE</button></div></div><div class="cfgRow"><label><span>🖥️ Gráficos & Desempenho</span></label><div class="cfgGrid"><button id="rtxBtn" style="border-color:#ffb703">✨ RTX: LIGADO</button><button id="pot">⚙ BATATA: OFF</button><button id="sr"></button><button id="sf"></button><button id="sp"></button><button id="sd"></button></div></div><button id="fs" style="width:100%">⛶ TELA CHEIA</button><button id="cfgClose" style="width:100%;background:#5e1b15">CONCLUÍDO</button></div></div>
+<div id="menu"><h1>Z-PARKOUR</h1><p id="best"></p><div class="menuBtns"><button id="cont">CONTINUAR</button><button id="new">▶ NOVO JOGO</button></div></div>
+<div id="hud"><div id="zoneBadge">🏙️ CENTRO DENSO (BECOS & TELHADOS)</div><div class="bar"><i id="hp" style="background:#e33"></i></div><div class="bar"><i id="fd" style="background:#e90"></i></div><div class="bar"><i id="wt" style="background:#39e"></i></div><div class="bar" style="height:6px"><i id="stBar" style="background:#4e8;width:100%"></i></div><div id="inf"></div><div id="inv" style="font-size:11px;margin-top:2px;opacity:.92"></div><div id="quickSlots"><div class="qSlot" id="qFood" title="Usar Comida"><small>1</small><span id="qFoodQty">0</span></div><div class="qSlot" id="qWater" title="Usar Água"><small>2</small><span id="qWaterQty">0</span></div><div class="qSlot" id="qGrenade" title="Granada [G]"><small>G</small><span id="qGrQty">0</span></div><div class="qSlot" id="qBomb" title="Bomba [H]"><small>H</small><span id="qBbQty">0</span></div></div></div>
+<div id="x"></div><div id="msg"></div>
+<div id="sc"><div id="scRing"></div><div id="scH"></div><div id="scV"></div><div id="scCenterDot"></div><div class="mil-h" style="left:calc(50% - 90px)"></div><div class="mil-h" style="left:calc(50% - 60px)"></div><div class="mil-h" style="left:calc(50% - 30px)"></div><div class="mil-h" style="left:calc(50% + 30px)"></div><div class="mil-h" style="left:calc(50% + 60px)"></div><div class="mil-h" style="left:calc(50% + 90px)"></div><div class="mil-v" style="top:calc(50% - 90px)"></div><div class="mil-v" style="top:calc(50% - 60px)"></div><div class="mil-v" style="top:calc(50% - 30px)"></div><div class="mil-v" style="top:calc(50% + 30px)"></div><div class="mil-v" style="top:calc(50% + 60px)"></div><div class="mil-v" style="top:calc(50% + 90px)"></div><div id="scInfo">LUNETA ÓPTICA · ZOOM ATIVO</div></div>
 <div id="cr" style="position:fixed;inset:0;display:none;background:#000d;flex-direction:column;align-items:center;justify-content:center;gap:8px;overflow:auto;padding:12px;z-index:90"></div>
-
-<div id="invPanel">
-  <div class="invHeader">
-    <h2>🎒 INVENTÁRIO & ARSENAL</h2>
-    <div class="invStats" id="invTopStats"></div>
-  </div>
-  <div class="invTabs">
-    <button class="invTab active" data-tab="all">Tudo</button>
-    <button class="invTab" data-tab="weapons">Armas (40)</button>
-    <button class="invTab" data-tab="consumables">Consumíveis & Explosivos</button>
-    <button class="invTab" data-tab="materials">Sucata & Materiais</button>
-  </div>
-  <div class="invBody">
-    <div class="equipBox">
-      <div class="equipTitle">Equipado Agora</div>
-      <div class="equipCard" id="invEquipped"></div>
-      <div class="equipTitle">Sobrevivência</div>
-      <div id="invSurvivalList" style="font-size:12px;display:flex;flex-direction:column;gap:6px"></div>
-    </div>
-    <div id="invGrid"></div>
-  </div>
-  <button id="invClose">FECHAR INVENTÁRIO</button>
-</div>
-
+<div id="invPanel"><div class="invHeader"><h2>🎒 INVENTÁRIO & ARSENAL</h2><div class="invStats" id="invTopStats"></div></div><div class="invTabs"><button class="invTab active" data-tab="all">Tudo</button><button class="invTab" data-tab="weapons">Armas (40)</button><button class="invTab" data-tab="consumables">Consumíveis & Explosivos</button><button class="invTab" data-tab="materials">Sucata & Materiais</button></div><div class="invBody"><div class="equipBox"><div class="equipTitle">Equipado Agora</div><div class="equipCard" id="invEquipped"></div><div class="equipTitle">Sobrevivência</div><div id="invSurvivalList" style="font-size:12px;display:flex;flex-direction:column;gap:6px"></div></div><div id="invGrid"></div></div><button id="invClose">FECHAR INVENTÁRIO</button></div>
 <div style="position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle,transparent 55%,#0008 100%);z-index:3"></div>
 <div id="bbar" style="position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:25%;width:50%;height:12px;background:#0008;display:none;border:1px solid #fff6;z-index:10"><i id="bbi" style="display:block;height:100%;background:#a0f"></i></div>
 <div id="fl"></div>
-
-<button class="t" id="bf" title="Atirar">🔥</button>
-<button class="t" id="bj" title="Pular">⏫</button>
-<button class="t" id="bd" title="Dash">⚡</button>
-<button class="t" id="bw" title="Trocar Arma">🔄</button>
-<button class="t" id="bs" title="Deslizar">🛝</button>
-<button class="t2" id="bg" style="left:10px" title="Granada">💣</button>
-<button class="t2" id="bb" style="left:62px" title="Bomba">🧨</button>
-<button class="t2" id="ba" style="left:114px" title="Mirar">🎯</button>
-<button class="t2" id="bc" style="left:166px" title="Craft">🛠️</button>
-<button class="t2" id="br" style="left:218px" title="Recarregar">🔃</button>
-<button class="t2" id="bi" style="left:270px" title="Inventário">🎒</button>
-
+<button class="t" id="bf" title="Atirar">🔥</button><button class="t" id="bj" title="Pular">⏫</button><button class="t" id="bd" title="Dash">⚡</button><button class="t" id="bw" title="Trocar Arma">🔄</button><button class="t" id="bs" title="Deslizar">🛝</button>
+<button class="t2" id="bg" style="left:10px" title="Granada">💣</button><button class="t2" id="bb" style="left:62px" title="Bomba">🧨</button><button class="t2" id="ba" style="left:114px" title="Mirar">🎯</button><button class="t2" id="bc" style="left:166px" title="Craft">🛠️</button><button class="t2" id="br" style="left:218px" title="Recarregar">🔃</button><button class="t2" id="bi" style="left:270px" title="Inventário">🎒</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const T=THREE,$=id=>document.getElementById(id),R=Math.random,SK='zp3d_v10_ui_fix',MAP=360;
 const memStore={};
 function readStore(k){try{return localStorage.getItem(k)}catch(e){return memStore[k]||null}}
 function writeStore(k,v){try{localStorage.setItem(k,v)}catch(e){memStore[k]=String(v)}}
-
-// Helper universal para toque/clique rápido sem bloqueio
-function onTap(el,fn){
-  if(!el)return;
-  let last=0;
-  const run=e=>{
-    if(e){e.stopPropagation()}
-    const now=performance.now();
-    if(now-last<140)return;
-    last=now;
-    fn(e);
-  };
-  el.addEventListener('pointerdown',run);
-  el.addEventListener('click',run);
-}
-
-// ============== RARIDADES ==============
-const RARITY={
-  common:{label:'Comum',color:'#b8bcc2',weight:42},
-  uncommon:{label:'Incomum',color:'#4cd964',weight:28},
-  rare:{label:'Rara',color:'#4ea8ff',weight:16},
-  epic:{label:'Épica',color:'#c06cff',weight:9},
-  legendary:{label:'Lendária',color:'#ffb703',weight:5}
-};
-
-// ============== TEXTURAS ==============
-function tex(w,h,fn,rx=1,ry=1){
-  const c=document.createElement('canvas');c.width=w;c.height=h;
-  fn(c.getContext('2d'),w,h);
-  const t=new T.CanvasTexture(c);
-  t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=4;t.repeat.set(rx,ry);return t;
-}
-function spk(x,w,h,n,cols){
-  for(let i=0;i<n;i++){x.globalAlpha=.15+R()*.35;x.fillStyle=cols[i%cols.length];x.fillRect(R()*w,R()*h,1+R()*4,1+R()*4)}
-  x.globalAlpha=1;
-}
-
-const tG=tex(256,256,(x,w,h)=>{
-  x.fillStyle='#3b3934';x.fillRect(0,0,w,h);
-  x.strokeStyle='#262420';x.lineWidth=2;
-  for(let i=0;i<=w;i+=32){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}
-  spk(x,w,h,3200,['#22201c','#524f47','#2f2d28','#181612','#635e54']);
-},130,130);
-
-const tR=tex(512,128,(x,w,h)=>{
-  x.fillStyle='#6c6962';x.fillRect(0,0,w,16);x.fillRect(0,h-16,w,16);
-  x.fillStyle='#8c887e';x.fillRect(0,14,w,4);x.fillRect(0,h-18,w,4);
-  x.fillStyle='#2a2926';x.fillRect(0,18,w,2);x.fillRect(0,h-20,w,2);
-  x.fillStyle='#1f2126';x.fillRect(0,20,w,h-40);
-  spk(x,w,h,4200,['#121317','#353840','#282a30','#18191d']);
-  x.fillStyle='rgba(70,95,120,0.22)';
-  x.beginPath();x.ellipse(140,48,38,10,0.1,0,Math.PI*2);x.fill();
-  x.beginPath();x.ellipse(390,82,45,11,-0.08,0,Math.PI*2);x.fill();
-  x.strokeStyle='#111215';x.lineWidth=1.5;
-  x.beginPath();x.moveTo(60,30);x.lineTo(85,48);x.lineTo(75,65);x.stroke();
-  x.beginPath();x.moveTo(290,95);x.lineTo(315,78);x.lineTo(340,86);x.stroke();
-  x.fillStyle='#b8bcc2';x.fillRect(0,23,w,2);x.fillRect(0,h-25,w,2);
-  x.fillStyle='#d8ae28';
-  for(let i=0;i<8;i++){x.fillRect(i*64+10,61,34,2.5);x.fillRect(i*64+10,65,34,2.5)}
-  x.fillStyle='#34383e';x.beginPath();x.arc(220,42,7,0,Math.PI*2);x.fill();
-  x.strokeStyle='#191b1f';x.lineWidth=1.5;x.stroke();
-},52,1);
-
-const tCrosswalk=tex(128,128,(x,w,h)=>{
-  x.fillStyle='#1f2126';x.fillRect(0,0,w,h);
-  spk(x,w,h,900,['#121317','#32353d']);
-  x.fillStyle='#d6d8dc';
-  for(let i=8;i<w-8;i+=22)x.fillRect(i,16,12,h-32);
-},1,1);
-
-const tC=tex(128,128,(x,w,h)=>{
-  x.fillStyle='#754920';x.fillRect(0,0,w,h);
-  for(let i=0;i<8;i++){x.fillStyle=i%2?'#633b17':'#855629';x.fillRect(0,i*16,w,15)}
-  x.strokeStyle='#42260c';x.lineWidth=6;x.strokeRect(3,3,w-6,h-6);
-},1,1);
-
-const tRoof=tex(128,128,(x,w,h)=>{
-  x.fillStyle='#36393e';x.fillRect(0,0,w,h);
-  x.strokeStyle='#232529';x.lineWidth=2;
-  for(let i=0;i<=w;i+=16){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}
-  spk(x,w,h,900,['#1e2024','#4a4f57','#2b2e33']);
-},4,4);
-
-const mkB=(base,win,style)=>tex(256,256,(x,w,h)=>{
-  x.fillStyle=base;x.fillRect(0,0,w,h);
-  if(style===1){
-    x.strokeStyle='#0006';x.lineWidth=1.5;
-    for(let j=0;j<16;j++){x.beginPath();x.moveTo(0,j*16);x.lineTo(w,j*16);x.stroke()}
-  }else if(style===2){
-    x.strokeStyle='#0005';x.lineWidth=2;
-    for(let i=0;i<=w;i+=64){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}
-  }
-  spk(x,w,h,2200,['#000','#555','#2e2218','#14100c']);
-  for(let i=0;i<4;i++)for(let j=0;j<4;j++){
-    const X=i*64+12,Y=j*64+10,r=R();
-    x.fillStyle='#181a1f';x.fillRect(X-3,Y-3,46,50);
-    x.fillStyle='#7a7872';x.fillRect(X-4,Y+45,48,5);
-    if(r<.14){x.fillStyle='#ffd269';x.fillRect(X,Y,40,44)}
-    else if(r<.34){x.fillStyle='#5c3d1e';for(let b=0;b<4;b++)x.fillRect(X-1,Y+4+b*10,42,6)}
-    else{x.fillStyle=win;x.fillRect(X,Y,40,44)}
-  }
-},1,1);
-
-const tBs=[
-  mkB('#6b3b2e','#12161c',1),
-  mkB('#68655e','#1a2028',0),
-  mkB('#3d4854','#1d2c38',2),
-  
+function onTap(el,fn){if(!el)return;let last=0;const run=e=>{if(e)e.stopPropagation();const now=performance.now();if(now-last<140)return;last=now;fn(e)};el.addEventListener('pointerdown',run);el.addEventListener('click',run)}
+const RARITY={common:{label:'Comum',color:'#b8bcc2',weight:42},uncommon:{label:'Incomum',color:'#4cd964',weight:28},rare:{label:'Rara',color:'#4ea8ff',weight:16},epic:{label:'Épica',color:'#c06cff',weight:9},legendary:{label:'Lendária',color:'#ffb703',weight:5}};
+function tex(w,h,fn,rx=1,ry=1){const c=document.createElement('canvas');c.width=w;c.height=h;fn(c.getContext('2d'),w,h);const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=4;t.repeat.set(rx,ry);return t}
+function spk(x,w,h,n,cols){for(let i=0;i<n;i++){x.globalAlpha=.15+R()*.35;x.fillStyle=cols[i%cols.length];x.fillRect(R()*w,R()*h,1+R()*4,1+R()*4)}x.globalAlpha=1}
+const tG=tex(256,256,(x,w,h)=>{x.fillStyle='#3b3934';x.fillRect(0,0,w,h);x.strokeStyle='#262420';x.lineWidth=2;for(let i=0;i<=w;i+=32){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}spk(x,w,h,3200,['#22201c','#524f47','#2f2d28','#181612','#635e54'])},130,130);
+const tR=tex(512,128,(x,w,h)=>{x.fillStyle='#6c6962';x.fillRect(0,0,w,16);x.fillRect(0,h-16,w,16);x.fillStyle='#8c887e';x.fillRect(0,14,w,4);x.fillRect(0,h-18,w,4);x.fillStyle='#2a2926';x.fillRect(0,18,w,2);x.fillRect(0,h-20,w,2);x.fillStyle='#1f2126';x.fillRect(0,20,w,h-40);spk(x,w,h,4200,['#121317','#353840','#282a30','#18191d']);x.fillStyle='rgba(70,95,120,0.22)';x.beginPath();x.ellipse(140,48,38,10,0.1,0,Math.PI*2);x.fill();x.beginPath();x.ellipse(390,82,45,11,-0.08,0,Math.PI*2);x.fill();x.strokeStyle='#111215';x.lineWidth=1.5;x.beginPath();x.moveTo(60,30);x.lineTo(85,48);x.lineTo(75,65);x.stroke();x.beginPath();x.moveTo(290,95);x.lineTo(315,78);x.lineTo(340,86);x.stroke();x.fillStyle='#b8bcc2';x.fillRect(0,23,w,2);x.fillRect(0,h-25,w,2);x.fillStyle='#d8ae28';for(let i=0;i<8;i++){x.fillRect(i*64+10,61,34,2.5);x.fillRect(i*64+10,65,34,2.5)}x.fillStyle='#34383e';x.beginPath();x.arc(220,42,7,0,Math.PI*2);x.fill();x.strokeStyle='#191b1f';x.lineWidth=1.5;x.stroke()},52,1);
+const tCrosswalk=tex(128,128,(x,w,h)=>{x.fillStyle='#1f2126';x.fillRect(0,0,w,h);spk(x,w,h,900,['#121317','#32353d']);x.fillStyle='#d6d8dc';for(let i=8;i<w-8;i+=22)x.fillRect(i,16,12,h-32)},1,1);
+const tC=tex(128,128,(x,w,h)=>{x.fillStyle='#754920';x.fillRect(0,0,w,h);for(let i=0;i<8;i++){x.fillStyle=i%2?'#633b17':'#855629';x.fillRect(0,i*16,w,15)}x.strokeStyle='#42260c';x.lineWidth=6;x.strokeRect(3,3,w-6,h-6)},1,1);
+const tRoof=tex(128,128,(x,w,h)=>{x.fillStyle='#36393e';x.fillRect(0,0,w,h);x.strokeStyle='#232529';x.lineWidth=2;for(let i=0;i<=w;i+=16){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}spk(x,w,h,900,['#1e2024','#4a4f57','#2b2e33'])},4,4);
+const mkB=(base,win,style)=>tex(256,256,(x,w,h)=>{x.fillStyle=base;x.fillRect(0,0,w,h);if(style===1){x.strokeStyle='#0006';x.lineWidth=1.5;for(let j=0;j<16;j++){x.beginPath();x.moveTo(0,j*16);x.lineTo(w,j*16);x.stroke()}}else if(style===2){x.strokeStyle='#0005';x.lineWidth=2;for(let i=0;i<=w;i+=64){x.beginPath();x.moveTo(i,0);x.lineTo(i,h);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(w,i);x.stroke()}}spk(x,w,h,2200,['#000','#555','#2e2218','#14100c']);for(let i=0;i<4;i++)for(let j=0;j<4;j++){const X=i*64+12,Y=j*64+10,r=R();x.fillStyle='#181a1f';x.fillRect(X-3,Y-3,46,50);x.fillStyle='#7a7872';x.fillRect(X-4,Y+45,48,5);if(r<.14){x.fillStyle='#ffd269';x.fillRect(X,Y,40,44)}else if(r<.34){x.fillStyle='#5c3d1e';for(let b=0;b<4;b++)x.fillRect(X-1,Y+4+b*10,42,6)}else{x.fillStyle=win;x.fillRect(X,Y,40,44)}}},1,1);
+const tBs=[mkB('#6b3b2e','#12161c',1),mkB('#68655e','#1a2028',0),mkB('#3d4854','#1d2c38',2),
